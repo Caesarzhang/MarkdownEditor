@@ -2,28 +2,30 @@ package Caesar;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by caesa on 2016/12/11.
  */
-public class Editor extends javax.swing.JFrame{
+public class EditorGUI extends javax.swing.JFrame{
 
     JTree htmlTree = new JTree();
-    JScrollPane htmlTreePanelScrol=new JScrollPane(htmlTree);
+    private JScrollPane htmlTreePanelScrol=new JScrollPane(htmlTree);
 
     JButton toDocx=new JButton("导出docx");
-
+    JButton preview=new JButton("预览");
     JEditorPane edit=new JEditorPane();
-    JScrollPane editPanelScrol=new JScrollPane(edit);
+    private JScrollPane editPanelScrol=new JScrollPane(edit);
 
-    JTextArea text = new JTextArea();
-    JScrollPane textPanelScrol=new JScrollPane(text);
+    TextPanel text = (TextPanel) new TextPanel();
+    private JScrollPane textPanelScrol=new JScrollPane(text);
 
     GridBagLayout gbaglayout = new GridBagLayout();
     GridBagConstraints constraints = new GridBagConstraints();
 
 
-    public Editor(){
+    public EditorGUI(){
 
         setSize(1200,800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -54,6 +56,7 @@ public class Editor extends javax.swing.JFrame{
 
         constraints.gridx = 7;
         constraints.gridwidth = 5;
+        text.setEditable(false);
         gbaglayout.setConstraints(textPanelScrol,constraints);
         add(textPanelScrol);
 
@@ -65,17 +68,19 @@ public class Editor extends javax.swing.JFrame{
         gbaglayout.setConstraints(toDocx,constraints);
         add(toDocx);
 
+        constraints.gridx=7;
+        gbaglayout.setConstraints(preview,constraints);
+        add(preview);
+
         setVisible(true);
-//            try
-//            {
-//                String html = new Markdown4jProcessor().process(edit.getText());
-//            }
-//            catch (Exception e)
-//            {
-//
-//            }
     }
-
-
-
+    public void PreviewFunc()
+    {
+        preview.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                text.setText(edit.getText());
+            }
+        });
+    }
 }

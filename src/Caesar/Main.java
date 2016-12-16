@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String argv[])
     {
-        Editor e = new Editor();
-
+        EditorGUI gui = new EditorGUI();
+        gui.PreviewFunc();
     }
 }
